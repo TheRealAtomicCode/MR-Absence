@@ -1,0 +1,20 @@
+{
+  "name": "brhr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon src/app.ts",
+    "build": "tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "puppeteer": "^18.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

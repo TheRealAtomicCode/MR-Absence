@@ -1,6 +1,6 @@
 
 
-const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration } = require('../utils/date-converter')
+const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration, getAdjustedHoursDuration } = require('../utils/date-converter')
 
 const getAbsenceArray = (splitArray) => {
     // adding all absences into one array
@@ -113,8 +113,11 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                 newAbsence.endMinutes = endMinutes;
 
                 newAbsence.durationInDays = getAdjustedDayDuration(newAbsence.durationInDays);
+
+                newAbsence.durationInHours = getAdjustedHoursDuration(newAbsence.durationInHours);
                 
-                console.log(newAbsence.durationInHours);
+                console.log(newAbsence);
+                
                 newAbsenceArray.push(newAbsence);
             }
         })

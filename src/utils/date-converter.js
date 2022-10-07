@@ -124,4 +124,15 @@ const getAdjustedDayDuration = (absenceDurationIndays) => {
    
 }
 
-module.exports = { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration };
+const getAdjustedHoursDuration = (absenceDurationInHours) => {
+    
+        const intValue = Math.floor(absenceDurationInHours);
+        const decimalValue = absenceDurationInHours - intValue;
+    
+        const minutes = decimalValue * 60;
+
+        return [ intValue, minutes ];
+    
+}
+
+module.exports = { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration, getAdjustedHoursDuration };

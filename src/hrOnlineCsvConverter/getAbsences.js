@@ -36,39 +36,13 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
         employeesArray.forEach((employee) => {
             
             if(absence.fullName === employee.fullName && absence.isApproved === 'Approved'){
-                
+
                 let newAbsence = {
-                    fullName: absence.fullName,
-                    absenceType: absence.absenceType,
-                    isApproved: absence.isApproved,
-                    isOngoing: absence.isOngoing,
-                    startDate: absence.startDate,
-                    startTime: absence.startTime,
-                    endDate: absence.endDate,
-                    endTime: absence.endTime,
-                    holidayEntitlementUnit: employee.holidayEntitlementUnit,
-                    durationInDays: absence.durationInDays,
-                    durationInHours: absence.durationInHours,
+                    ...absence,
                     employeeType: employee.employeeType,
+                    holidayEntitlementUnit: employee.holidayEntitlementUnit,
                     brhrID: employee.brhrID,
-                    email: employee.email,
-                    notes: absence.notes,
-                    startDayOfTheWeek: null,
-                    startDayOfTheMonth: null,
-                    startMonth: null,
-                    startMonthNumber: null,
-                    startYear: null,
-                    brhrStartDate: null,
-                    endDayOfTheWeek: null,
-                    endDayOfTheMonth: null,
-                    endMonth: null,
-                    endMonthNumber: null,
-                    endYear: null,
-                    brhrEndDate: null,
-                    startHour: null,
-                    startMinutes: null,
-                    endHour: null,
-                    endMinutes: null,
+                    email: employee.email
                 }
 
                 newAbsence.absenceType = getBrhrAbsenceType(newAbsence.absenceType);
@@ -115,9 +89,8 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                 newAbsence.durationInDays = getAdjustedDayDuration(newAbsence.durationInDays);
 
                 newAbsence.durationInHours = getAdjustedHoursDuration(newAbsence.durationInHours);
-                
-                console.log(newAbsence);
-                
+
+               
                 newAbsenceArray.push(newAbsence);
             }
         })

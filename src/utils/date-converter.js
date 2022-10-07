@@ -1,12 +1,12 @@
-const { getDay } = require('date-fns')
-
 const getBrhrAbsenceType = (absenceType) => {
     switch(absenceType){
         case 'Holiday': absenceType = 'Annual leave';
         break;
+        case 'Time off in lieu': absenceType = 'Time off in lieu';
+        break;
         case 'Unpaid Leave': absenceType = 'Unpaid leave';
         break;
-        case 'sickness': absenceType = 'Sick leave';
+        case 'Sickness': absenceType = 'Sickness';
         break;
         case 'Maternity Leave': absenceType = 'Maternity leave';
         break;
@@ -14,7 +14,11 @@ const getBrhrAbsenceType = (absenceType) => {
         break;
         case 'Bereavement Leave': absenceType = 'Bereavement leave';
         break;
-        case 'Working from Home': absenceType = 'Other';
+        case 'Dentist Appointment': absenceType = 'Dental appointment';
+        break;
+        case 'Hospital Appointment': absenceType = 'Medical appointment';
+        break;
+        case 'Adoption Leave': absenceType = 'Adoption';
         break;
         case 'Ante-Natal': absenceType = 'Antenatal leave';
         // check this to be true
@@ -27,75 +31,26 @@ const getBrhrAbsenceType = (absenceType) => {
 }
 
 const getBrhrCaledarDates = (absenceDate) => {
-
     let tempDate = absenceDate.split('/')
 
     let dayOfTheMonth = Number(tempDate[0]);
     let monthNumber = Number(tempDate[1]);
     let year = Number(tempDate[2]);
-                
-    // get days and months names
-    const dayOfTheWeekNumber = getDay(new Date(year, monthNumber, dayOfTheMonth));
 
-    let dayOfTheWeek = '';
+    const date = new Date(year, monthNumber, dayOfTheMonth);
+    const month = date.toLocaleString('default', { month: 'short' })
+    const dayOfTheWeek = date.toLocaleString('default', { weekday: 'short' })
 
-    switch(dayOfTheWeekNumber){
-        case 0: dayOfTheWeek = 'Sun';
-        break;
-        case  1: dayOfTheWeek = 'Mon';
-        break;
-        case 2: dayOfTheWeek = 'Tue';
-        break;
-        case 3: dayOfTheWeek = 'Wed';
-        break;
-        case 4: dayOfTheWeek = 'Thu';
-        break;
-        case 5: dayOfTheWeek = 'Fri';
-        break;
-        case 6: dayOfTheWeek = 'Sat';
-        break;
-    }
+    const brhrDate = `${dayOfTheWeek} ${dayOfTheMonth?.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) || ''} ${month} ${year}`;
 
-    let month = '';
-
-    switch(monthNumber){
-        case 1: month = 'Jan';
-        break;
-        case 2: month = 'Feb';
-        break;
-        case 3: month = 'Mar';
-        break;
-        case 4: month = 'Apr';
-        break;
-        case 5: month = 'May';
-        break;
-        case 6: month = 'Jun';
-        break;
-        case 7: month = 'Jul';
-        break;
-        case 8: month = 'Aug';
-        break;
-        case 9: month = 'Sep';
-        break;
-        case 10: month = 'Oct';
-        break;
-        case 11: month = 'Nov';
-        break;
-        case 12: month = 'Dec';
-        break;
-    }
-
-    // BRHR data format calendar selected
-    const brhrData = `${dayOfTheWeek} ${dayOfTheMonth?.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) || ''} ${month} ${year}`;
-                
-    return [
-        dayOfTheWeek,
-        dayOfTheMonth,
-        month,
-        monthNumber,
-        year,
-        brhrData
-    ]
+        return [
+            dayOfTheWeek,
+            dayOfTheMonth,
+            month,
+            monthNumber,
+            year,
+            brhrDate
+        ]
 }
 
 const getBrhrHoursAndMinutes = (absenceTime) => {

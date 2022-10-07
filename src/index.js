@@ -28,7 +28,7 @@ async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeC
 
     // populate the absencesArray with the employee details from the employeesArray
     const absencesArrayWithEmployeeDetails = populateAbsenceArray(absencesArray, employeeArray);
-    console.log(absencesArrayWithEmployeeDetails);
+    
 }
         
 main('abdalqaderbaghi@gmail.com', 'Brighthr123', './src/csv/AbsenceReport.csv', './src/csv/BRHRcompanyExtract.csv');

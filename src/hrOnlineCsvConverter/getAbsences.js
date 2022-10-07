@@ -31,9 +31,9 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
     absenceArray.forEach((absence) => {
         employeesArray.forEach((employee) => {
             
-            if(absence.fullName === employee.fullName){
+            if(absence.fullName === employee.fullName && absence.isApproved === 'Approved'){
                 
-                const newAbsence = {
+                let newAbsence = {
                     fullName: absence.fullName,
                     absenceType: absence.absenceType,
                     isApproved: absence.isApproved,
@@ -50,8 +50,31 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                     email: employee.email,
                     notes: absence.notes
                 }
+
+                switch(newAbsence.absenceType){
+                    case 'Holiday': newAbsence.absenceType = 'Annual leave';
+                    break;
+                    case 'Unpaid Leave': newAbsence.absenceType = 'Unpaid leave';
+                    break;
+                    case 'sickness': newAbsence.absenceType = 'Sick leave';
+                    break;
+                    case 'Maternity Leave': newAbsence.absenceType = 'Maternity leave';
+                    break;
+                    case 'Paternity Leave': newAbsence.absenceType = 'Paternity leave';
+                    break;
+                    case 'Bereavement Leave': newAbsence.absenceType = 'Bereavement leave';
+                    break;
+                    case 'Working from Home': newAbsence.absenceType = 'Other';
+                    break;
+                    case 'Ante-Natal': newAbsence.absenceType = 'Antenatal leave';
+                    // check this to be true
+                    case 'Holiday for Sick': newAbsence.absenceType = 'Annual leave';
+                    break;
+                    default : newAbsence.absenceType = 'Other';
+                }
                 
 
+                console.log(newAbsence.absenceType);
                 newAbsenceArray.push(newAbsence);
             }
         })

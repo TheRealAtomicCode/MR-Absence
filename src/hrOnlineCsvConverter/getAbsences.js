@@ -1,6 +1,6 @@
 
 
-const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes } = require('../utils/date-converter')
+const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration } = require('../utils/date-converter')
 
 const getAbsenceArray = (splitArray) => {
     // adding all absences into one array
@@ -58,13 +58,13 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                     startMonth: null,
                     startMonthNumber: null,
                     startYear: null,
-                    brhrStartData: null,
+                    brhrStartDate: null,
                     endDayOfTheWeek: null,
                     endDayOfTheMonth: null,
                     endMonth: null,
                     endMonthNumber: null,
                     endYear: null,
-                    brhrEndData: null,
+                    brhrEndDate: null,
                     startHour: null,
                     startMinutes: null,
                     endHour: null,
@@ -79,14 +79,14 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                     startMonth,
                     startMonthNumber,
                     startYear,
-                    brhrStartData
+                    brhrStartDate
                  ] = getBrhrCaledarDates(newAbsence.startDate);
                 newAbsence.startDayOfTheWeek = startDayOfTheWeek;
                 newAbsence.startDayOfTheMonth = startDayOfTheMonth;
                 newAbsence.startMonth = startMonth;
                 newAbsence.startMonthNumber = startMonthNumber;
                 newAbsence.startYear = startYear;
-                newAbsence.brhrStartData = brhrStartData;
+                newAbsence.brhrStartDate = brhrStartDate;
 
 
                 let [
@@ -95,14 +95,14 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                     endMonth,
                     endMonthNumber,
                     endYear,
-                    brhrEndData
+                    brhrEndDate
                  ] = getBrhrCaledarDates(newAbsence.endDate);
                 newAbsence.endDayOfTheWeek = endDayOfTheWeek;
                 newAbsence.endDayOfTheMonth = endDayOfTheMonth;
                 newAbsence.endMonth = endMonth;
                 newAbsence.endMonthNumber = endMonthNumber;
                 newAbsence.endYear = endYear;
-                newAbsence.brhrEndData = brhrEndData;
+                newAbsence.brhrEndDate = brhrEndDate;
 
                 const [startHour, startMinutes] = getBrhrHoursAndMinutes(newAbsence.startTime);
                 newAbsence.startHour = startHour;
@@ -112,8 +112,9 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                 newAbsence.endHour = endHour;
                 newAbsence.endMinutes = endMinutes;
 
-                // console.log(newAbsence.durationInDays);
+                newAbsence.durationInDays = getAdjustedDayDuration(newAbsence.durationInDays);
                 
+                console.log(newAbsence.durationInHours);
                 newAbsenceArray.push(newAbsence);
             }
         })

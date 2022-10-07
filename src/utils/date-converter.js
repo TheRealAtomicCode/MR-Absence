@@ -107,8 +107,21 @@ const getBrhrHoursAndMinutes = (absenceTime) => {
     return [ hour, minutes ];
 }
 
-const getAdjustedDayDuration = (absenceDurationIndays = 0) => {
-    //
+const getAdjustedDayDuration = (absenceDurationIndays) => {
+
+    const intValue = Math.floor(absenceDurationIndays);
+    const decimalValue = absenceDurationIndays - intValue;
+
+    if(absenceDurationIndays === ''){
+        return null;
+    } else if(decimalValue < 0.25){   
+        return intValue;
+    } else if(decimalValue >= 0.25 && decimalValue < 0.75){
+        return intValue + 0.5;
+    } else {
+        return intValue + 1;
+    }
+   
 }
 
-module.exports = { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes };
+module.exports = { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration };

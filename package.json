@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "csvtojson": "^2.0.10",
+    "date-fns": "^2.29.3",
     "puppeteer": "^18.0.5"
   },
   "devDependencies": {

@@ -1,3 +1,7 @@
+
+
+const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes } = require('../utils/date-converter')
+
 const getAbsenceArray = (splitArray) => {
     // adding all absences into one array
     let absenceArray = [];
@@ -48,33 +52,68 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
                     employeeType: employee.employeeType,
                     brhrID: employee.brhrID,
                     email: employee.email,
-                    notes: absence.notes
+                    notes: absence.notes,
+                    startDayOfTheWeek: null,
+                    startDayOfTheMonth: null,
+                    startMonth: null,
+                    startMonthNumber: null,
+                    startYear: null,
+                    brhrStartData: null,
+                    endDayOfTheWeek: null,
+                    endDayOfTheMonth: null,
+                    endMonth: null,
+                    endMonthNumber: null,
+                    endYear: null,
+                    brhrEndData: null,
+                    startHour: null,
+                    startMinutes: null,
+                    endHour: null,
+                    endMinutes: null,
                 }
 
-                switch(newAbsence.absenceType){
-                    case 'Holiday': newAbsence.absenceType = 'Annual leave';
-                    break;
-                    case 'Unpaid Leave': newAbsence.absenceType = 'Unpaid leave';
-                    break;
-                    case 'sickness': newAbsence.absenceType = 'Sick leave';
-                    break;
-                    case 'Maternity Leave': newAbsence.absenceType = 'Maternity leave';
-                    break;
-                    case 'Paternity Leave': newAbsence.absenceType = 'Paternity leave';
-                    break;
-                    case 'Bereavement Leave': newAbsence.absenceType = 'Bereavement leave';
-                    break;
-                    case 'Working from Home': newAbsence.absenceType = 'Other';
-                    break;
-                    case 'Ante-Natal': newAbsence.absenceType = 'Antenatal leave';
-                    // check this to be true
-                    case 'Holiday for Sick': newAbsence.absenceType = 'Annual leave';
-                    break;
-                    default : newAbsence.absenceType = 'Other';
-                }
+                newAbsence.absenceType = getBrhrAbsenceType(newAbsence.absenceType);
+
+                let [
+                    startDayOfTheWeek,
+                    startDayOfTheMonth,
+                    startMonth,
+                    startMonthNumber,
+                    startYear,
+                    brhrStartData
+                 ] = getBrhrCaledarDates(newAbsence.startDate);
+                newAbsence.startDayOfTheWeek = startDayOfTheWeek;
+                newAbsence.startDayOfTheMonth = startDayOfTheMonth;
+                newAbsence.startMonth = startMonth;
+                newAbsence.startMonthNumber = startMonthNumber;
+                newAbsence.startYear = startYear;
+                newAbsence.brhrStartData = brhrStartData;
+
+
+                let [
+                    endDayOfTheWeek,
+                    endDayOfTheMonth,
+                    endMonth,
+                    endMonthNumber,
+                    endYear,
+                    brhrEndData
+                 ] = getBrhrCaledarDates(newAbsence.endDate);
+                newAbsence.endDayOfTheWeek = endDayOfTheWeek;
+                newAbsence.endDayOfTheMonth = endDayOfTheMonth;
+                newAbsence.endMonth = endMonth;
+                newAbsence.endMonthNumber = endMonthNumber;
+                newAbsence.endYear = endYear;
+                newAbsence.brhrEndData = brhrEndData;
+
+                const [startHour, startMinutes] = getBrhrHoursAndMinutes(newAbsence.startTime);
+                newAbsence.startHour = startHour;
+                newAbsence.startMinutes = startMinutes;
+
+                const [endHour, endMinutes] = getBrhrHoursAndMinutes(newAbsence.endTime);
+                newAbsence.endHour = endHour;
+                newAbsence.endMinutes = endMinutes;
+
+                // console.log(newAbsence.durationInDays);
                 
-
-                console.log(newAbsence.absenceType);
                 newAbsenceArray.push(newAbsence);
             }
         })

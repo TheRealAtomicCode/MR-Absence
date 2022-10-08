@@ -1,7 +1,7 @@
 const { csvToJsonConverter, splitArray } = require('./utils/csv-converter');
 const { getAbsenceArray, getHrOnlineAbsencesInBrhrFormat } = require('./hrOnlineCsvConverter/getAbsences');
 const { getEmployeesArray, getBrhrIDs, mergeEmployeeArray} = require('./hrOnlineCsvConverter/getEmployees');
-const { addAbsencesToBrhr } = require('./absence-scraper/addAbsencesToBrhr');
+const { addAbsencesToBrhr } = require('./scraper/addAbsencesToBrhr');
 
 async function getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
     // converting csv to json for brhr employees and hrOnline absences
@@ -33,13 +33,13 @@ async function getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbs
 }
 
 
-
+const unifiedAbsenceArray = require('./scraper/temp');
 
 
 async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
-    const hrOnlineAbsences = await getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv);
+    // const hrOnlineAbsences = await getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv);
 
-    await addAbsencesToBrhr(adminEmail, adminPassword, hrOnlineAbsences);
+    await addAbsencesToBrhr(adminEmail, adminPassword, unifiedAbsenceArray);
     
 }
         

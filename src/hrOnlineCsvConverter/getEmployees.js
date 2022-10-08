@@ -1,4 +1,4 @@
-const { launchPuppeteer, brhrLogin } = require('../absence-scraper/brhrLogin');
+const { launchPuppeteer, brhrLogin } = require('../scraper/brhrLogin');
 
 const getEmployeesArray = (splitArray) => {
     let employeesArray = [];

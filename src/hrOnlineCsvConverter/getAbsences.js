@@ -1,5 +1,3 @@
-
-
 const { getBrhrAbsenceType, getBrhrCaledarDates, getBrhrHoursAndMinutes, getAdjustedDayDuration, getAdjustedHoursDuration } = require('../utils/date-converter')
 
 const getAbsenceArray = (splitArray) => {
@@ -35,7 +33,7 @@ const getHrOnlineAbsencesInBrhrFormat = (absenceArray, employeesArray) => {
     absenceArray.forEach((absence) => {
         employeesArray.forEach((employee) => {
             
-            if(absence.fullName === employee.fullName && absence.isApproved === 'Approved'){
+            if(absence.fullName === employee.fullName){
 
                 let newAbsence = {
                     ...absence,

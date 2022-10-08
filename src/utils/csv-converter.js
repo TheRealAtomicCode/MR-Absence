@@ -1,7 +1,6 @@
 const csv = require('csvtojson');
 
 const csvToJsonConverter = async (csvFilePath) => {
-    console.log(csvFilePath);
     // converting csv to json
     const obj = csv().fromFile(csvFilePath)
             .then(jsonObj => jsonObj);

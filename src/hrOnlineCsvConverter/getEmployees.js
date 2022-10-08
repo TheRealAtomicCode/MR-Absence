@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const { launchPuppeteer, brhrLogin } = require('../absence-scraper/brhrLogin');
 
 const getEmployeesArray = (splitArray) => {
     let employeesArray = [];
@@ -23,23 +23,11 @@ const getBrhrIDs = async (adminEmail, adminPassword) => {
 
     // // // get links to each profile // // // //
 
-    let url = 'https://login.brighthr.com/Account/Login';
-    const browser = await puppeteer.launch({
-        "headless": false,
-        slowMo: 10,
-        defaultViewport: false,
-        
-    });
+    const browser = await launchPuppeteer();
+
     const page = await browser.newPage();
     //logging in
-    await page.goto(url);
-    await page.type('[id=Username]', adminEmail);
-    await page.type('[id=Password]', adminPassword);
-    await page.click('[type=submit]', { waitUntil: "domcontentloaded" });
-    
-    // get employee links and names
-    await page.goto('https://app.brighthr.com/employee-hub', { waitUntil: "domcontentloaded" });
-    await page.waitForSelector('.sc-jzgbtB')
+    await brhrLogin(page, adminEmail, adminPassword);
 
     const addedEmployees = await page.$$('.sc-jzgbtB > .Wrapper-msciC')
 
@@ -51,13 +39,13 @@ const getBrhrIDs = async (adminEmail, adminPassword) => {
         brightHREmployeeNameAndIDArray.push({employeeName, employeeLink})
     }
 
-    await browser.close();    
+    await browser.close();
     
     return brightHREmployeeNameAndIDArray;
     
 }
 
-const populateEmployeeArray = (employeesArray, employeeNamesAndIdsArray) => {
+const mergeEmployeeArray = (employeesArray, employeeNamesAndIdsArray) => {
     const newEmployeeArray = [];
 
     employeesArray.forEach((employee) => {
@@ -82,4 +70,4 @@ const populateEmployeeArray = (employeesArray, employeeNamesAndIdsArray) => {
 }
 
 
-module.exports = { getEmployeesArray, getBrhrIDs, populateEmployeeArray };
+module.exports = { getEmployeesArray, getBrhrIDs, mergeEmployeeArray };

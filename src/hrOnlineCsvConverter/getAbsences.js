@@ -29,7 +29,7 @@ const getAbsenceArray = (splitArray) => {
     return absenceArray;
 }
 
-const populateAbsenceArray = (absenceArray, employeesArray) => {
+const getHrOnlineAbsencesInBrhrFormat = (absenceArray, employeesArray) => {
     let newAbsenceArray = [];
     
     absenceArray.forEach((absence) => {
@@ -101,4 +101,4 @@ const populateAbsenceArray = (absenceArray, employeesArray) => {
 
 
 
-module.exports = { getAbsenceArray, populateAbsenceArray };
+module.exports = { getAbsenceArray, getHrOnlineAbsencesInBrhrFormat };

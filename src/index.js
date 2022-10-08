@@ -1,16 +1,16 @@
 const { csvToJsonConverter, splitArray } = require('./utils/csv-converter');
-const { getAbsenceArray, populateAbsenceArray } = require('./hrOnlineCsvConverter/getAbsences');
-const { getEmployeesArray, getBrhrIDs, populateEmployeeArray} = require('./hrOnlineCsvConverter/getEmployees');
+const { getAbsenceArray, getHrOnlineAbsencesInBrhrFormat } = require('./hrOnlineCsvConverter/getAbsences');
+const { getEmployeesArray, getBrhrIDs, mergeEmployeeArray} = require('./hrOnlineCsvConverter/getEmployees');
+const { addAbsencesToBrhr } = require('./absence-scraper/addAbsencesToBrhr');
 
-
-async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
+async function getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
     // converting csv to json for brhr employees and hrOnline absences
-    const hrOnlineJson = await csvToJsonConverter(hrOnlineAbsemceCsv);
-    const brhrJson = await csvToJsonConverter(brhrEmployeeCsv);
+    const hrOnlineAbsencesJson = await csvToJsonConverter(hrOnlineAbsemceCsv);
+    const brhrEmployeesJson = await csvToJsonConverter(brhrEmployeeCsv);
     
     // splitting hrOnline absences and brhr employees away from default csv array
-    const splitAbsences = splitArray(hrOnlineJson, 'Forename', 'Details');
-    const splitEmployees = splitArray(brhrJson, 'First Name', 'Home Phone');
+    const splitAbsences = splitArray(hrOnlineAbsencesJson, 'Forename', 'Details');
+    const splitEmployees = splitArray(brhrEmployeesJson, 'First Name', 'Home Phone');
 
     // get absenceArray returns the unified absences with nulls 
     // for employeeType, holidayEntitlementUnit, brhrID and email
@@ -24,12 +24,23 @@ async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeC
     let employeeNamesAndIdsArray = await getBrhrIDs(adminEmail, adminPassword);
     
     // populate the absencesArray with the employee details from the employeesArray
-    const employeeArray = populateEmployeeArray(employeesArrayWithoutID, employeeNamesAndIdsArray);
+    const employeeArray = mergeEmployeeArray(employeesArrayWithoutID, employeeNamesAndIdsArray);
 
     // populate the absencesArray with the employee details from the employeesArray
-    const absencesArrayWithEmployeeDetails = populateAbsenceArray(absencesArray, employeeArray);
+    const absencesArrayWithEmployeeDetails = getHrOnlineAbsencesInBrhrFormat(absencesArray, employeeArray);
+ 
+    return absencesArrayWithEmployeeDetails;
+}
+
+
+
+
+
+async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
+    const hrOnlineAbsences = await getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv);
+
+    await addAbsencesToBrhr(adminEmail, adminPassword, hrOnlineAbsences);
     
-    console.log(absencesArrayWithEmployeeDetails)
 }
         
 main('abdalqaderbaghi@gmail.com', 'Brighthr123', './src/csv/AbsenceReport.csv', './src/csv/BRHRcompanyExtract.csv');

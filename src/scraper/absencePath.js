@@ -4,14 +4,13 @@ const absencePath = async (page, unifiedAbsenceArray) => {
     // check whether absence is regular or variable, days or hours, declined.
    
     for(let i = 0; i < unifiedAbsenceArray.length; i++){
-        console.log(i)
         if(unifiedAbsenceArray[i].isApproved === 'Declined'){
-            
-        }
-        if(unifiedAbsenceArray[i].endYear < 2021){
-            console.log('past', unifiedAbsenceArray[i].endYear)
             continue;
         }
+        // if(unifiedAbsenceArray[i].endYear < 2021){
+        //     console.log('past', unifiedAbsenceArray[i].endYear)
+        //     continue;
+        // }
         if(unifiedAbsenceArray[i].employeeType === 'regular' && unifiedAbsenceArray[i].holidayEntitlementUnit === 'days'){
             
         }

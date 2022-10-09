@@ -45,3 +45,6 @@ async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeC
 }
         
 main('abdalqaderbaghi@gmail.com', 'Brighthr123', './src/csv/AbsenceReport.csv', './src/csv/BRHRcompanyExtract.csv');
+
+//  const { playground } = require('./scraper/playground');
+//  playground('abdalqaderbaghi@gmail.com', 'Brighthr123');

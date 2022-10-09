@@ -27,7 +27,7 @@ const getBrhrAbsenceType = (absenceType) => {
         default : absenceType = 'Other';
     }
 
-    return absenceType;
+    return absenceType.replace(/\s+/g, '-').toLowerCase();
 }
 
 const getBrhrCaledarDates = (absenceDate) => {

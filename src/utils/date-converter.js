@@ -32,25 +32,23 @@ const getBrhrAbsenceType = (absenceType) => {
 
 const getBrhrCaledarDates = (absenceDate) => {
     let tempDate = absenceDate.split('/')
-
+    
     let dayOfTheMonth = Number(tempDate[0]);
-    let monthNumber = Number(tempDate[1]);
+    let month = Number(tempDate[1]);
     let year = Number(tempDate[2]);
+    let monthIndex = month - 1;
+    
+    const date = new Date(year, monthIndex, dayOfTheMonth);
 
-    const date = new Date(year, monthNumber, dayOfTheMonth);
-    const month = date.toLocaleString('default', { month: 'short' })
-    const dayOfTheWeek = date.toLocaleString('default', { weekday: 'short' })
-
-    const brhrDate = `${dayOfTheWeek} ${dayOfTheMonth?.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) || ''} ${month} ${year}`;
-
-        return [
-            dayOfTheWeek,
-            dayOfTheMonth,
-            month,
-            monthNumber,
-            year,
-            brhrDate
-        ]
+    const brhrDate = date.toDateString();
+    
+    return [
+        dayOfTheMonth,
+        month,
+        year,
+        monthIndex,
+        brhrDate
+    ]
 }
 
 const getBrhrHoursAndMinutes = (absenceTime) => {

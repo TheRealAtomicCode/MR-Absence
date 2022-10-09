@@ -15,10 +15,6 @@ const getAbsenceArray = (splitArray) => {
             endTime: absence.field10,
             durationInDays: absence.field11,
             durationInHours: absence.field12,
-            employeeType: null,
-            holidayEntitlementUnit: null,
-            brhrID: null,
-            email: null,
             notes: absence.field14
         };
 
@@ -35,46 +31,45 @@ const getHrOnlineAbsencesInBrhrFormat = (absenceArray, employeesArray) => {
             
             if(absence.fullName === employee.fullName){
 
+                // remove ID from brhrID
+                let id = employee.brhrID.split('/')
+                
                 let newAbsence = {
                     ...absence,
                     employeeType: employee.employeeType,
                     holidayEntitlementUnit: employee.holidayEntitlementUnit,
-                    brhrID: employee.brhrID,
+                    brhrID: id[2],
                     email: employee.email
                 }
 
                 newAbsence.absenceType = getBrhrAbsenceType(newAbsence.absenceType);
 
                 let [
-                    startDayOfTheWeek,
                     startDayOfTheMonth,
                     startMonth,
-                    startMonthNumber,
                     startYear,
-                    brhrStartDate
-                 ] = getBrhrCaledarDates(newAbsence.startDate);
-                newAbsence.startDayOfTheWeek = startDayOfTheWeek;
+                    startMonthIndex,
+                    startBrhrDate
+                ] = getBrhrCaledarDates(newAbsence.startDate);
                 newAbsence.startDayOfTheMonth = startDayOfTheMonth;
                 newAbsence.startMonth = startMonth;
-                newAbsence.startMonthNumber = startMonthNumber;
                 newAbsence.startYear = startYear;
-                newAbsence.brhrStartDate = brhrStartDate;
-
+                newAbsence.startMonthIndex = startMonthIndex;
+                newAbsence.startBrhrDate = startBrhrDate;
 
                 let [
-                    endDayOfTheWeek,
                     endDayOfTheMonth,
                     endMonth,
-                    endMonthNumber,
                     endYear,
-                    brhrEndDate
-                 ] = getBrhrCaledarDates(newAbsence.endDate);
-                newAbsence.endDayOfTheWeek = endDayOfTheWeek;
+                    endMonthIndex,
+                    endBrhrDate
+                ] = getBrhrCaledarDates(newAbsence.endDate);
                 newAbsence.endDayOfTheMonth = endDayOfTheMonth;
                 newAbsence.endMonth = endMonth;
-                newAbsence.endMonthNumber = endMonthNumber;
                 newAbsence.endYear = endYear;
-                newAbsence.brhrEndDate = brhrEndDate;
+                newAbsence.endMonthIndex = endMonthIndex;
+                newAbsence.endBrhrDate = endBrhrDate;
+            
 
                 const [startHour, startMinutes] = getBrhrHoursAndMinutes(newAbsence.startTime);
                 newAbsence.startHour = startHour;

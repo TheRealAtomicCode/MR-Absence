@@ -8,10 +8,10 @@ const absencePath = async (page, unifiedAbsenceArray) => {
         if(unifiedAbsenceArray[i].isApproved === 'Declined'){
             
         }
-        // if(unifiedAbsenceArray[i].endYear < 2021){
-            // check absence year
-        //     return;
-        // }
+        if(unifiedAbsenceArray[i].endYear < 2021){
+            console.log('past', unifiedAbsenceArray[i].endYear)
+            continue;
+        }
         if(unifiedAbsenceArray[i].employeeType === 'regular' && unifiedAbsenceArray[i].holidayEntitlementUnit === 'days'){
             
         }

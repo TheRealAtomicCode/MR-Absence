@@ -29,6 +29,7 @@ async function getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbs
     // populate the absencesArray with the employee details from the employeesArray
     const absencesArrayWithEmployeeDetails = getHrOnlineAbsencesInBrhrFormat(absencesArray, employeeArray);
  
+    
     return absencesArrayWithEmployeeDetails;
 }
 
@@ -37,9 +38,9 @@ const unifiedAbsenceArray = require('./scraper/temp');
 
 
 async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv){
-    // const hrOnlineAbsences = await getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv);
+    const hrOnlineAbsences = await getHrOnlineUnifiedAbsences(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeCsv);
 
-    await addAbsencesToBrhr(adminEmail, adminPassword, unifiedAbsenceArray);
+    await addAbsencesToBrhr(adminEmail, adminPassword, hrOnlineAbsences);
     
 }
         

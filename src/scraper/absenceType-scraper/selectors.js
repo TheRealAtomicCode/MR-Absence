@@ -68,10 +68,14 @@ const checkIfAbsenceExists = async (page, fullName, startBrhrDate, endBrhrDate) 
     }
 }
 
-const selectDaysToDeduct = async (page, fullName, daysToDeduct, startBrhrDate, endBrhrDate) => {
+const selectDaysToDeduct = async (page, fullName, daysToDeduct, startBrhrDate, endBrhrDate, absenceType) => {
     try{
         // select days to deduct
-        await page.type('[name="durationDays"]', `${Number(daysToDeduct)}`);
+       if(absenceType === 'annual-leave' || absenceType === 'other'){
+            await page.type('[name="durationDays"]', `${Number(daysToDeduct)}`);
+       }else{
+            await page.type('[name="duration"]', `${Number(daysToDeduct)}`);
+       }
     }catch(err){
         console.log({
             error: `Could not select days to deduct of the amount: ${daysToDeduct} for ${fullName}: ${startBrhrDate} - ${endBrhrDate}`,

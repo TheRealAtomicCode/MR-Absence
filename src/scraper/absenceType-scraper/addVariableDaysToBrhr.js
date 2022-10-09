@@ -11,6 +11,9 @@ const addVariableDaysToBrhr = async (page, absence) => {
         await page.select('select[name="absenceType"]', absence.absenceType);
 
         try{
+
+            console.log(absence.absenceType)
+            
             await selectStartData(page, absence.employeeName, absence.startYear, absence.startMonthIndex, absence.startBrhrDate);
             await selectEndData(page, absence.employeeName, absence.endYear, absence.endMonthIndex, absence.endBrhrDate);
             
@@ -18,7 +21,8 @@ const addVariableDaysToBrhr = async (page, absence) => {
 
             await checkIfAbsenceExists(page, absence.fullName, absence.startBrhrDate, absence.endBrhrDate);
 
-            await selectDaysToDeduct(page, absence.fullName, absence.durationInDays, absence.startBrhrDate, absence.endBrhrDate);
+            await selectDaysToDeduct(page, absence.fullName, absence.durationInDays, absence.startBrhrDate, absence.endBrhrDate, absence.absenceType);
+        
         }catch(err){
             console.log({error: 'exit task absence'});
         }

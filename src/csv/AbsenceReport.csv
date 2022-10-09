@@ -106,7 +106,7 @@ Title,Forename,Surname,Absence Type,Absence Status,Is Ongoing,Start Date,Start T
 ,222,222,Holiday,Approved,,3/1/2022,9:00,3/1/2022,15:00,,1,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,3,days,Holiday,Cancelled,,22/12/2022,10:00,31/12/2022,18:00,2.5,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,Admin,Account,Holiday,Cancelled,,22/12/2015,8:30,22/12/2015,14:30,0.13,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,Admin,Account,Holiday,Approved,,24/12/2015,0:00,25/12/2015,23:59,0.27,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,Admin,Account,Holiday,Approved,,24/12/2015,0:00,25/1/2016,23:59,0.27,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,Admin,Account,Holiday,Approved,,21/04/2016,9:00,21/04/2016,17:00,0.13,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,Admin,Account,Public Duties,Approved,,13/06/2016,9:00,13/06/2016,17:00,0.93,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,Admin,Account,Holiday,Approved,,20/06/2016,9:00,20/06/2016,17:00,0.93,,head company->Main Office,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

@@ -1,4 +1,5 @@
 const { addVariableDaysToBrhr } = require('./absenceType-scraper/addVariableDaysToBrhr');
+const { addVariableHoursToBrhr } = require('./absenceType-scraper/addVariableHoursToBrhr');
 
 const absencePath = async (page, unifiedAbsenceArray) => {
     // check whether absence is regular or variable, days or hours, declined.
@@ -18,11 +19,10 @@ const absencePath = async (page, unifiedAbsenceArray) => {
             
         }
         if(unifiedAbsenceArray[i].employeeType === 'variable' && unifiedAbsenceArray[i].holidayEntitlementUnit === 'days'){
-            await addVariableDaysToBrhr(page, unifiedAbsenceArray[i]);
-            
+            // await addVariableDaysToBrhr(page, unifiedAbsenceArray[i]); 
         } 
         if(unifiedAbsenceArray[i].employeeType === 'variable' && unifiedAbsenceArray[i].holidayEntitlementUnit === 'hours'){
-            
+            await addVariableHoursToBrhr(page, unifiedAbsenceArray[i]);
         }
         
     }

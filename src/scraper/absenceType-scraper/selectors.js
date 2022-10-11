@@ -88,10 +88,53 @@ const selectDaysToDeduct = async (page, fullName, daysToDeduct, startBrhrDate, e
     }
 }
 
+const selectHoursToDeduct = async (page, fullName, hoursToDeduct, minutesToDeduct, startBrhrDate, endBrhrDate, absenceType) => {
+    // select days duration
+    try{
+        // check absence type and select days to deduct
+        if(absenceType === 'annual-leave' || absenceType === 'other'){
+            console.log(absenceType, hoursToDeduct, fullName, startBrhrDate, endBrhrDate)
+            // const el = await page.$eval('.sc-cLQEGU', el => {
+            //     console.log(document.querySelector('.sc-cLQEGU'))
+            // });
+
+            await page.click('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > input')
+            
+            await page.evaluate( () => document.querySelector('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > div > div.sc-cmthru.jzhDgT > div:nth-child(1) > input').value = "0")
+            await page.evaluate( () => document.querySelector('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > div > div.sc-cmthru.jzhDgT > div:nth-child(3) > input').value = "0")
+
+            await page.click('[data-e2e="time-apply"]');
+            
+            await page.click('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > input')
+            await page.type('[data-e2e="time-hours"]', `${Number(0)}`);
+            await page.type('[data-e2e="time-minutes"]', `${Number(0)}`);
+
+            await page.click('[data-e2e="time-apply"]');
+
+
+
+            console.log(chalk.green(`Added ${hoursToDeduct[0]} hours and ${hoursToDeduct[1]} minutes to ${fullName}: ${startBrhrDate} - ${endBrhrDate}`),);
+        
+        }else if(absenceType === 'sickness'){
+            // await page.type('[data-e2e="sickness-vheDuration"]', `${Number(daysToDeduct)}`);
+        }else{
+            // await page.type('[name="duration"]', `${Number(daysToDeduct)}`);
+        }
+
+        await throwErrorIfElementExists(page, '[data-e2e="vheDuration-1"]')
+        
+
+    }catch(err){
+        console.log(chalk.red(`Could not select days duration of the amount: ${daysToDeduct} for ${fullName}: ${startBrhrDate} - ${endBrhrDate}`),);
+        throw new Error('exit task absence');
+    }
+}
+
 module.exports = { 
     selectStartData, 
     selectEndData, 
     checkIfAbsenceUnderMultipleYears, 
     checkIfAbsenceExists, 
-    selectDaysToDeduct 
+    selectDaysToDeduct,
+    selectHoursToDeduct
 };

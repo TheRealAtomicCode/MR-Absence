@@ -4,7 +4,7 @@ const {
     selectEndData, 
     checkIfAbsenceUnderMultipleYears, 
     checkIfAbsenceExists, 
-    selectDaysToDeduct 
+    selectHoursToDeduct
 } = require('./selectors');
 
 
@@ -24,11 +24,11 @@ const addVariableHoursToBrhr = async (page, absence) => {
 
         await checkIfAbsenceExists(page, absence.fullName, absence.startBrhrDate, absence.endBrhrDate, absence.absenceType);
        
+        await selectHoursToDeduct(page, absence.fullName, absence.durationInHours, absence.durationInMinutes, absence.startBrhrDate, absence.endBrhrDate, absence.absenceType);
+
     }catch(err){
         console.log({error: 'exit task absence'});
     }
-
-        
     
     return;
 }

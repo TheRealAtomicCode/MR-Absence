@@ -31,7 +31,7 @@ const addVariableDaysToBrhr = async (page, absence) => {
         // select 2 deductions
         }    
         // submit absence
-        // await page.click('[data-e2e=submitAbsence]')
+        await page.click('[data-e2e=submitAbsence]')
         // comment out in test mode
 
         console.log(chalk.green(`Successfully added ${absence.absenceType} for ${absence.fullName}: ${absence.startBrhrDate} - ${absence.endBrhrDate}`));

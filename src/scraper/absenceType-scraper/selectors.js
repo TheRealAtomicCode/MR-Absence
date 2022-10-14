@@ -93,23 +93,22 @@ const selectHoursToDeduct = async (page, fullName, hoursToDeduct, minutesToDeduc
     try{
         // check absence type and select days to deduct
         if(absenceType === 'annual-leave' || absenceType === 'other'){
+            
+
+
             console.log(absenceType, hoursToDeduct, fullName, startBrhrDate, endBrhrDate)
-            // const el = await page.$eval('.sc-cLQEGU', el => {
-            //     console.log(document.querySelector('.sc-cLQEGU'))
-            // });
-
-            await page.click('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > input')
-            
-            await page.evaluate( () => document.querySelector('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > div > div.sc-cmthru.jzhDgT > div:nth-child(1) > input').value = "0")
-            await page.evaluate( () => document.querySelector('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > div > div.sc-cmthru.jzhDgT > div:nth-child(3) > input').value = "0")
-
-            await page.click('[data-e2e="time-apply"]');
+            console.log(`${hoursToDeduct[0]}`)
+            console.log(`${hoursToDeduct[1]}`)
             
             await page.click('#app > div > div.side-nav > div > div > form > div > div:nth-child(3) > div > div > input')
-            await page.type('[data-e2e="time-hours"]', `${Number(0)}`);
-            await page.type('[data-e2e="time-minutes"]', `${Number(0)}`);
-
-            await page.click('[data-e2e="time-apply"]');
+            await delay(1000)
+            await page.$eval('[data-e2e="time-hours"]', h => {
+                h.value = `${hoursToDeduct[0]}`
+                console.log(h.value)
+            });
+            await delay(1000)
+            await page.$eval('[data-e2e="time-minutes"]', m => m.value = `${hoursToDeduct[1]}`);
+            await page.click('[data-e2e="time-apply"]', { waitUntil: "domcontentloaded" })
 
 
 
@@ -121,7 +120,7 @@ const selectHoursToDeduct = async (page, fullName, hoursToDeduct, minutesToDeduc
             // await page.type('[name="duration"]', `${Number(daysToDeduct)}`);
         }
 
-        await throwErrorIfElementExists(page, '[data-e2e="vheDuration-1"]')
+        // await throwErrorIfElementExists(page, '[data-e2e="vheDuration-1"]')
         
 
     }catch(err){

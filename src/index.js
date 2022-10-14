@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { csvToJsonConverter, splitArray } = require('./utils/csv-converter');
 const { getAbsenceArray, getHrOnlineAbsencesInBrhrFormat } = require('./hrOnlineCsvConverter/getAbsences');
 const { getEmployeesArray, getBrhrIDs, mergeEmployeeArray} = require('./hrOnlineCsvConverter/getEmployees');
@@ -44,7 +46,7 @@ async function main(adminEmail, adminPassword, hrOnlineAbsemceCsv, brhrEmployeeC
     
 }
         
-main('abdalqaderbaghi@gmail.com', 'Brighthr123', './src/csv/AbsenceReport.csv', './src/csv/BRHRcompanyExtract.csv');
+main(`${process.env.EMAIL}`, `${process.env.PASSWORD}`, './src/csv/AbsenceReport.csv', './src/csv/BRHRcompanyExtract.csv');
 
 //  const { playground } = require('./scraper/playground');
 //  playground('abdalqaderbaghi@gmail.com', 'Brighthr123');
